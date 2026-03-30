@@ -15,12 +15,20 @@ type AuthController struct {
 	Users        repositories.UserRepository
 }
 
-type authRequest struct {
+type AuthRequest struct {
 	InitData string `json:"init_data"`
 }
 
+// @Summary Telegram авторизация
+// @Description Логин через Telegram WebApp
+// @Tags Автоизация
+// @Accept json
+// @Produce json
+// @Param body body AuthRequest true "Telegram init data"
+// @Success 200 {object} views.AuthResponse
+// @Router /auth/telegram [post]
 func (c *AuthController) TelegramLogin(w http.ResponseWriter, r *http.Request) {
-	var req authRequest
+	var req AuthRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil || req.InitData == "" {
 		http.Error(w, "bad request", http.StatusBadRequest)
 		return

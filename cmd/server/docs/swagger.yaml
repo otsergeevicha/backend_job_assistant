@@ -1,0 +1,79 @@
+basePath: /
+definitions:
+  controllers.AuthRequest:
+    properties:
+      init_data:
+        type: string
+    type: object
+  models.User:
+    properties:
+      age:
+        type: integer
+      first_name:
+        type: string
+      id:
+        type: integer
+      language_code:
+        type: string
+      last_name:
+        type: string
+      nickname:
+        type: string
+      telegram_id:
+        type: integer
+      username:
+        type: string
+    type: object
+  views.AuthResponse:
+    properties:
+      user:
+        $ref: '#/definitions/models.User'
+    type: object
+  views.MeResponse:
+    properties:
+      user:
+        $ref: '#/definitions/models.User'
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API для твоего проекта
+  title: Job Assistant API
+  version: "1.0"
+paths:
+  /auth/telegram:
+    post:
+      consumes:
+      - application/json
+      description: Логин через Telegram WebApp
+      parameters:
+      - description: Telegram init data
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.AuthRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.AuthResponse'
+      summary: Telegram авторизация
+      tags:
+      - Автоизация
+  /me:
+    get:
+      description: Возвращает текущего пользователя
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.MeResponse'
+      summary: Текущий пользователь
+      tags:
+      - users
+swagger: "2.0"
